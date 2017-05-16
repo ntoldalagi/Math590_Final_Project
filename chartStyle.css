@@ -1,0 +1,23 @@
+/*Author: Nick Toldalagi
+Date: 5/16/17
+This css file provides necessary style changes to the graph that
+is created by javaFX. I learned some of this from Stack Overflow*/
+
+.default-color0.chart-series-line {-fx-stroke: transparent;}
+.default-color1.chart-series-line {-fx-stroke: Green;}
+
+.default-color0.chart-line-symbol {
+  -fx-background-color: transparent, Blue;
+}
+
+.default-color1.chart-line-symbol {
+  -fx-background-color: transparent, transparent;
+}
+
+.default-color0.chart-legend-item-symbol {
+  -fx-background-color: Blue;
+}
+
+.default-color1.chart-legend-item-symbol {
+  -fx-background-color: Green;
+}
