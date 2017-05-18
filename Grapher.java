@@ -15,7 +15,8 @@ public class Grapher extends Application {
 
     public Grapher() {
     }
-    public Grapher(String s) {
+
+    public Grapher(String s, ArrayList<Coordinate> lCoord, ArrayList<Coordinate> sCoord) {
       title = s;
       launch();
     }
@@ -56,7 +57,7 @@ public class Grapher extends Application {
         stage.show();
     }
 
+
     public static void main(String[] args) {
-      Grapher g = new Grapher("Tesla");
     }
 }

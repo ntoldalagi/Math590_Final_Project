@@ -1,29 +1,29 @@
 public class Coordinate {
-  private int x;
-  private int y;
+  private double x;
+  private double y;
 
-  public Coordinate(int x_, int y_) {
+  public Coordinate(double x_, double y_) {
     x = x_;
     y = y_;
   }
 
-  public int getX() {
+  public double getX() {
     return x;
   }
 
-  public int getY() {
+  public double getY() {
     return y;
   }
 
-  public void setX(int x_) {
+  public void setX(double x_) {
     x = x_;
   }
 
-  public void setY(int y_) {
+  public void setY(double y_) {
     y = y_;
   }
 
-  public void setCoord(int x_, int y_) {
+  public void setCoord(double x_, double y_) {
     x = x_;
     y = y_;
   }
