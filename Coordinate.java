@@ -27,4 +27,8 @@ public class Coordinate {
     x = x_;
     y = y_;
   }
+
+  public String toString() {
+    return "(" + x + ", " + y + ")";
+  }
 }

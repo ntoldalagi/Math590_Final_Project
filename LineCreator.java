@@ -11,6 +11,8 @@ public class LineCreator {
   private ArrayList<Double> inYData;
   private ArrayList<Double> inXData;
   private double slope;
+  private ArrayList<Coordinate> lineCoordinates;
+  private ArrayList<Coordinate> scatterCoordinates;
 
   public LineCreator(String in1, String in2) {
     fileName = in1;
@@ -19,6 +21,11 @@ public class LineCreator {
     inYData = readFile(fileName);
     inXData = readFile(f2);
     Regressor r = new Regressor(inXData, inYData);
+    slope = r.getFinalSlope();
+    lineCoordinates = new ArrayList<Coordinate>();
+    scatterCoordinates = new ArrayList<Coordinate>();
+    makeCoordinates();
+    Grapher g = new Grapher("Tesla", lineCoordinates, scatterCoordinates);
   }
 
   public ArrayList<Double> readFile(String fName) {
@@ -42,6 +49,16 @@ public class LineCreator {
       data.add(Double.parseDouble(s));
     }
     return data;
+  }
+
+  public void makeCoordinates() {
+    int min = Math.min(inXData.size(), inYData.size());
+    scatterCoordinates = new ArrayList<Coordinate>();
+    lineCoordinates = new ArrayList<Coordinate>();
+    for(int i = 0; i < min ; i++) {
+      scatterCoordinates.add(new Coordinate(inXData.get(i), inYData.get(i)));
+      lineCoordinates.add(new Coordinate(inXData.get(i), Regressor.function(inXData.get(i), slope)));
+    }
   }
 
 

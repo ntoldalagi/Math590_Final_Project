@@ -10,21 +10,24 @@ import java.util.ArrayList;
 
 public class Grapher extends Application {
     private static String title = "Unnamed";
-    private ArrayList<Coordinate> lineCoords;
-    private ArrayList<Coordinate> scatterCoords;
+    private static ArrayList<Coordinate> lineCoords;
+    private static ArrayList<Coordinate> scatterCoords;
 
     public Grapher() {
     }
 
     public Grapher(String s, ArrayList<Coordinate> lCoord, ArrayList<Coordinate> sCoord) {
+      scatterCoords = sCoord;
+      lineCoords = lCoord;
       title = s;
       launch();
     }
 
-    @Override public void start(Stage stage) {
+     public void start(Stage stage) {
+      System.out.println("SHOULD RUN SECOND");
         stage.setTitle("Scatter Chart Sample");
-        final NumberAxis xAxis = new NumberAxis(0, 10, 1);
-        final NumberAxis yAxis = new NumberAxis(-100, 500, 100);
+        final NumberAxis xAxis = new NumberAxis(0, 40, 4);
+        final NumberAxis yAxis = new NumberAxis(0, 50, 10);
         // final ScatterChart<Number,Number> scatterGraph = new
         //     ScatterChart<Number,Number>(xAxis,yAxis);
         final LineChart<Number, Number> lineGraph = new
@@ -32,20 +35,21 @@ public class Grapher extends Application {
         xAxis.setLabel("Time in Days");
         yAxis.setLabel("Prices");
         lineGraph.setTitle(title);
-
         XYChart.Series series1 = new XYChart.Series();
         series1.setName(title + " prices");
-        series1.getData().add(new XYChart.Data(4.2, 193.2));
-        series1.getData().add(new XYChart.Data(2.2, 393.2));
-        series1.getData().add(new XYChart.Data(6.2, 119.2));
-        series1.getData().add(new XYChart.Data(1.2, 180.2));
+        // series1.getData().add(new XYChart.Data(4.2, 193.2));
+        // System.out.println("djfajds;");
+        for(Coordinate c: scatterCoords) {
+          series1.getData().add(new XYChart.Data(c.getX(), c.getY()));
+        }
 
         XYChart.Series series2 = new XYChart.Series();
         series2.setName("Regression Line");
-        series2.getData().add(new XYChart.Data(5.2, 229.2));
-        series2.getData().add(new XYChart.Data(9.2, 429.2));
-        series2.getData().add(new XYChart.Data(7.2, 219.2));
-        series2.getData().add(new XYChart.Data(3.2, 179.2));
+        // series2.getData().add(new XYChart.Data(5.2, 229.2));
+        for(Coordinate c: lineCoords) {
+          series2.getData().add(new XYChart.Data(0.0, 0.0));
+          series2.getData().add(new XYChart.Data(c.getX(), c.getY()));
+        }
 
         lineGraph.setAnimated(false);
         lineGraph.setCreateSymbols(true);
