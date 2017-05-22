@@ -25,11 +25,10 @@ public class Grapher extends Application {
 
      public void start(Stage stage) {
       System.out.println("SHOULD RUN SECOND");
+      int yAxisMax = 50;
         stage.setTitle("Scatter Chart Sample");
         final NumberAxis xAxis = new NumberAxis(0, 40, 4);
-        final NumberAxis yAxis = new NumberAxis(0, 50, 10);
-        // final ScatterChart<Number,Number> scatterGraph = new
-        //     ScatterChart<Number,Number>(xAxis,yAxis);
+        final NumberAxis yAxis = new NumberAxis(0, yAxisMax, 10);
         final LineChart<Number, Number> lineGraph = new
             LineChart<Number, Number>(xAxis, yAxis);
         xAxis.setLabel("Time in Days");
@@ -37,8 +36,7 @@ public class Grapher extends Application {
         lineGraph.setTitle(title);
         XYChart.Series series1 = new XYChart.Series();
         series1.setName(title + " prices");
-        // series1.getData().add(new XYChart.Data(4.2, 193.2));
-        // System.out.println("djfajds;");
+
         for(Coordinate c: scatterCoords) {
           series1.getData().add(new XYChart.Data(c.getX(), c.getY()));
         }
@@ -51,7 +49,7 @@ public class Grapher extends Application {
           series2.getData().add(new XYChart.Data(c.getX(), c.getY()));
         }
 
-        lineGraph.setAnimated(false);
+        lineGraph.setAnimated(true);
         lineGraph.setCreateSymbols(true);
 
         lineGraph.getData().addAll(series1, series2);

@@ -11,6 +11,7 @@ public class LineCreator {
   private ArrayList<Double> inYData;
   private ArrayList<Double> inXData;
   private double slope;
+  private double yIntercept;
   private ArrayList<Coordinate> lineCoordinates;
   private ArrayList<Coordinate> scatterCoordinates;
 
@@ -55,10 +56,18 @@ public class LineCreator {
     int min = Math.min(inXData.size(), inYData.size());
     scatterCoordinates = new ArrayList<Coordinate>();
     lineCoordinates = new ArrayList<Coordinate>();
+    double finalX = 0.0;
     for(int i = 0; i < min ; i++) {
       scatterCoordinates.add(new Coordinate(inXData.get(i), inYData.get(i)));
       lineCoordinates.add(new Coordinate(inXData.get(i), Regressor.function(inXData.get(i), slope)));
+      finalX = inXData.get(i);
     }
+    finalX += 2.0;
+    while(Regressor.function(finalX, slope) < 50.0) {
+        lineCoordinates.add(new Coordinate(finalX, Regressor.function(finalX, slope)));
+      finalX+= 2.0;
+    }
+      lineCoordinates.add(new Coordinate(finalX, Regressor.function(finalX, slope)));
   }
 
 
