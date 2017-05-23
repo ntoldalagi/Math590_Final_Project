@@ -3,6 +3,7 @@ import java.io.*;
 import java.io.IOException;
 import java.lang.StringBuffer;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 
 public class LineCreator {
   private String fileName;
@@ -18,11 +19,14 @@ public class LineCreator {
   public LineCreator(String in1, String in2) {
     fileName = in1;
     f2 = in2;
+    JFileChooser chooser= new JFileChooser();
+    int choice = chooser.showOpenDialog(null);
     dir = new File("").getAbsolutePath();
     inYData = readFile(fileName);
     inXData = readFile(f2);
     Regressor r = new Regressor(inXData, inYData);
     slope = r.getFinalSlope();
+    yIntercept = r.getFinalIntercept();
     lineCoordinates = new ArrayList<Coordinate>();
     scatterCoordinates = new ArrayList<Coordinate>();
     makeCoordinates();
@@ -59,15 +63,16 @@ public class LineCreator {
     double finalX = 0.0;
     for(int i = 0; i < min ; i++) {
       scatterCoordinates.add(new Coordinate(inXData.get(i), inYData.get(i)));
-      lineCoordinates.add(new Coordinate(inXData.get(i), Regressor.function(inXData.get(i), slope)));
+      lineCoordinates.add(new Coordinate(inXData.get(i), Regressor.function(inXData.get(i), slope, yIntercept)));
       finalX = inXData.get(i);
     }
     finalX += 2.0;
-    while(Regressor.function(finalX, slope) < 50.0) {
-        lineCoordinates.add(new Coordinate(finalX, Regressor.function(finalX, slope)));
+    while(Regressor.function(finalX, slope, yIntercept) < 50.0) {
+      lineCoordinates.add(new Coordinate(finalX, Regressor.function(finalX, slope, yIntercept)));
       finalX+= 2.0;
     }
-      lineCoordinates.add(new Coordinate(finalX, Regressor.function(finalX, slope)));
+    lineCoordinates.add(new Coordinate(finalX, Regressor.function(finalX, slope, yIntercept)));
+    lineCoordinates.add(0 , new Coordinate(0, yIntercept));
   }
 
 

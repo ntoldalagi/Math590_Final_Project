@@ -45,11 +45,10 @@ public class Grapher extends Application {
         series2.setName("Regression Line");
         // series2.getData().add(new XYChart.Data(5.2, 229.2));
         for(Coordinate c: lineCoords) {
-          series2.getData().add(new XYChart.Data(0.0, 0.0));
           series2.getData().add(new XYChart.Data(c.getX(), c.getY()));
         }
 
-        lineGraph.setAnimated(true);
+        lineGraph.setAnimated(false);
         lineGraph.setCreateSymbols(true);
 
         lineGraph.getData().addAll(series1, series2);
