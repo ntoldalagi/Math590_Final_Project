@@ -19,8 +19,8 @@ public class LineCreator {
   public LineCreator(String in1, String in2) {
     fileName = in1;
     f2 = in2;
-    JFileChooser chooser= new JFileChooser();
-    int choice = chooser.showOpenDialog(null);
+    // JFileChooser chooser= new JFileChooser();
+    // int choice = chooser.showOpenDialog(null);
     dir = new File("").getAbsolutePath();
     inYData = readFile(fileName);
     inXData = readFile(f2);
@@ -67,12 +67,21 @@ public class LineCreator {
       finalX = inXData.get(i);
     }
     finalX += 2.0;
-    while(Regressor.function(finalX, slope, yIntercept) < 50.0) {
+    int maxY = Grapher.findMax(scatterCoordinates, false) + 10;
+    System.out.println("Max y: " + maxY);
+    while(Regressor.function(finalX, slope, yIntercept) < maxY) {
       lineCoordinates.add(new Coordinate(finalX, Regressor.function(finalX, slope, yIntercept)));
       finalX+= 2.0;
     }
     lineCoordinates.add(new Coordinate(finalX, Regressor.function(finalX, slope, yIntercept)));
     lineCoordinates.add(0 , new Coordinate(0, yIntercept));
+    int minY = Grapher.findMin(scatterCoordinates, false) - 10;
+    finalX = yIntercept;
+    while(Regressor.function(finalX, slope, yIntercept) > minY) {
+      lineCoordinates.add(0 , new Coordinate(finalX, Regressor.function(finalX, slope, yIntercept)));
+      finalX -= 2.0;
+    }
+    lineCoordinates.add(0 , new Coordinate(finalX, Regressor.function(finalX, slope, yIntercept)));
   }
 
 
