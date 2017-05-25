@@ -83,31 +83,8 @@ public class Regressor {
     System.out.println("Initial costSlope: " + costSlope);
     double costSlope2 = calculateSecondCostSlope(slope, y_Cept, coords);
 
-    // if(costSlope < 0.0) {
-    //   // System.out.println("dasfak");
-    //   factor *= -1;
-    // }
-    // cost1 = calculateCost(slope - .01, coords);
-    // double cost2 = calculateCost(slope + .01, coords);
-    // // System.out.println("djaflk;d");
-    // // System.out.println(cost1-cost2);
-    // boolean ok =  true;
-    // while(ok ||(cost1 - cost2 > .0001) || (cost2 - cost1 < -0.0001)) {
-    //   System.out.println(slope);
-    //   cost1 = calculateCost(slope, coords);
-    //   slope += factor;
-    //   cost2 = calculateCost(slope, coords);
-    //   if(cost1 < cost2) {
-    //     factor *= -1;
-    //     factor /= 2;
-    //     double temp = cost1;
-    //     cost1 = cost2;
-    //     cost2 = temp;
-    //     ok = false;
-    //   }
-    // }
     int i =0;
-    while((costSlope < .00001 && costSlope2 < .00001) /*|| i< 100000*/) {
+    while((costSlope < .00001) /*|| i< 100000*/) {
       // System.out.println(costSlope);
       y_Cept = y_Cept + (.01) * calculateSecondCostSlope(slope, y_Cept, coords);
       slope = slope + (.00001) * calculateFirstCostSlope(slope, y_Cept, coords);
