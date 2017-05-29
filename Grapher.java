@@ -12,6 +12,7 @@ public class Grapher extends Application {
     private static String title = "Unnamed";
     private static ArrayList<Coordinate> lineCoords;
     private static ArrayList<Coordinate> scatterCoords;
+    private String xoriginal;
 
     public Grapher() {
     }
@@ -20,6 +21,7 @@ public class Grapher extends Application {
       scatterCoords = sCoord;
       lineCoords = lCoord;
       title = s;
+      // xoriginal = x1;
       launch();
     }
 
@@ -36,7 +38,7 @@ public class Grapher extends Application {
       final NumberAxis yAxis = new NumberAxis(yAxisMin -10, yAxisMax + 10, (yAxisMax - yAxisMin)/10);
       final LineChart<Number, Number> lineGraph = new
           LineChart<Number, Number>(xAxis, yAxis);
-      xAxis.setLabel("Time in Days");
+      xAxis.setLabel("Time in Days affter " + xoriginal) ;
       yAxis.setLabel("Prices");
       lineGraph.setTitle(title);
       XYChart.Series series1 = new XYChart.Series();

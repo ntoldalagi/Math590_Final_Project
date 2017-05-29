@@ -86,14 +86,12 @@ public class Regressor {
     int i =0;
     while((costSlope < .00001) /*|| i< 100000*/) {
       // System.out.println(costSlope);
-      y_Cept = y_Cept + (.01) * calculateSecondCostSlope(slope, y_Cept, coords);
+      y_Cept = y_Cept + (.005) * calculateSecondCostSlope(slope, y_Cept, coords);
       slope = slope + (.00001) * calculateFirstCostSlope(slope, y_Cept, coords);
       costSlope = calculateFirstCostSlope(slope, y_Cept, coords);
       costSlope2 = calculateSecondCostSlope(slope, y_Cept, coords);
       System.out.println("Final: costSlope: " + costSlope);
       System.out.println("Second: " + costSlope2);
-      // cost1 = calculateCost(slope - .01, coords);
-      // cost2 = calculateCost(slope + .01, coords);
       i++;
     }
     System.out.println("Slope: " + slope + "y_Cept: " + y_Cept);

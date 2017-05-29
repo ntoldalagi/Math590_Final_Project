@@ -17,13 +17,10 @@ public class LineCreator {
   private ArrayList<Coordinate> scatterCoordinates;
 
   public LineCreator(String in1, String in2) {
-    fileName = in1;
-    f2 = in2;
     // JFileChooser chooser= new JFileChooser();
     // int choice = chooser.showOpenDialog(null);
-    dir = new File("").getAbsolutePath();
-    inYData = readFile(fileName);
-    inXData = readFile(f2);
+    inYData = readFile(in1);
+    inXData = readFile(in2);
     Regressor r = new Regressor(inXData, inYData);
     slope = r.getFinalSlope();
     yIntercept = r.getFinalIntercept();
@@ -91,8 +88,6 @@ public class LineCreator {
     if(in1.indexOf(".txt") == -1) {
       in1 += ".txt";
     }
-
-    // System.out.println(in);
     LineCreator lc = new LineCreator(in1, in2);
   }
 
