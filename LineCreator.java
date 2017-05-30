@@ -16,10 +16,9 @@ public class LineCreator {
   private ArrayList<Coordinate> lineCoordinates;
   private ArrayList<Coordinate> scatterCoordinates;
 
-  public LineCreator(String in1, String title) {
-    // JFileChooser chooser= new JFileChooser();
-    // int choice = chooser.showOpenDialog(null);
-    inYData = readFile(in1);
+  public LineCreator(File f, String title) {
+
+    inYData = readFile(f);
     Regressor r = new Regressor(startDate, inYData);
     slope = r.getFinalSlope();
     yIntercept = r.getFinalIntercept();
@@ -29,10 +28,10 @@ public class LineCreator {
     Grapher g = new Grapher(title, lineCoordinates, scatterCoordinates, startDate);
   }
 
-  public ArrayList<Double> readFile(String fName) {
+  public ArrayList<Double> readFile(File f) {
     ArrayList<Double> data = new ArrayList<Double>();
     ArrayList<String> inputStrings = new ArrayList<String>();
-    File f = new File(fName);
+    // File f = new File(fName);
     String str = "";
     String str1 = "";
     try {
@@ -118,17 +117,21 @@ public class LineCreator {
 
 
   public static void main(String[] args) {
-    String in1 = args[0];
+    File f = null;
     String title = "";
-    // String in2 = args[1];
-    if(in1.indexOf(".txt") == -1) {
-      title = in1;
-      in1 += ".txt";
-    } else {
-      int i = in1.indexOf(".txt");
-      title = in1.substring(0,i);
+    while(true) {
+      JFileChooser chooser = new JFileChooser();
+      int choice = chooser.showOpenDialog(null);
+      f = chooser.getSelectedFile();
+      if(f.getName().indexOf(".txt") == -1) {
+        System.out.println("CHOOSE A FILE OF TYPE '.txt'");
+        continue;
+      } else {
+        title = f.getName().substring(0, f.getName().indexOf(".txt"));
+        break;
+      }
     }
-    LineCreator lc = new LineCreator(in1, title);
+    LineCreator lc = new LineCreator(f, title);
   }
 
 }
