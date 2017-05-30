@@ -12,33 +12,30 @@ public class Grapher extends Application {
     private static String title = "Unnamed";
     private static ArrayList<Coordinate> lineCoords;
     private static ArrayList<Coordinate> scatterCoords;
-    private String xoriginal;
-
+    private static String xoriginal = null;
+    private String startDate;
     public Grapher() {
     }
 
-    public Grapher(String s, ArrayList<Coordinate> lCoord, ArrayList<Coordinate> sCoord) {
+    public Grapher(String s, ArrayList<Coordinate> lCoord, ArrayList<Coordinate> sCoord, String start) {
       scatterCoords = sCoord;
       lineCoords = lCoord;
+      xoriginal = start;
       title = s;
-      // xoriginal = x1;
       launch();
     }
 
      public void start(Stage stage) {
-      System.out.println("SHOULD RUN SECOND");
       int yAxisMax = findMax(scatterCoords, false);
       int xAxisMax = findMax(scatterCoords, true);
       int yAxisMin = findMin(scatterCoords, false);
       int xAxisMin = findMin(scatterCoords, true);
-      System.out.println(yAxisMax + ", " + xAxisMax);
-      System.out.println(yAxisMin + ", " + xAxisMin);
       stage.setTitle(title + " regression graph");
       final NumberAxis xAxis = new NumberAxis(xAxisMin -10, xAxisMax + 10, (xAxisMax - xAxisMin)/10);
       final NumberAxis yAxis = new NumberAxis(yAxisMin -10, yAxisMax + 10, (yAxisMax - yAxisMin)/10);
       final LineChart<Number, Number> lineGraph = new
           LineChart<Number, Number>(xAxis, yAxis);
-      xAxis.setLabel("Time in Days affter " + xoriginal) ;
+      xAxis.setLabel("Time in Days after " + xoriginal) ;
       yAxis.setLabel("Prices");
       lineGraph.setTitle(title);
       XYChart.Series series1 = new XYChart.Series();
@@ -48,7 +45,6 @@ public class Grapher extends Application {
       }
       XYChart.Series series2 = new XYChart.Series();
       series2.setName("Regression Line");
-      // series2.getData().add(new XYChart.Data(5.2, 229.2));
       for(Coordinate c: lineCoords) {
         series2.getData().add(new XYChart.Data(c.getX(), c.getY()));
       }

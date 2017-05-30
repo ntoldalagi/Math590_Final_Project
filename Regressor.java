@@ -3,13 +3,15 @@ import java.util.ArrayList;
 public class Regressor {
   private ArrayList<Double> xVals;
   private ArrayList<Double> yVals;
+  private String startDate;
   private ArrayList<Coordinate> coords;
   private double finalSlope;
   private double yIntercept;
 
-  public Regressor(ArrayList<Double> x, ArrayList<Double> y) {
-    xVals = x;
+  public Regressor(String start, ArrayList<Double> y) {
+    startDate = start;
     yVals = y;
+    xVals = null;
     coords = createCoords();
     finalSlope = findMin(coords);
   }
@@ -24,11 +26,12 @@ public class Regressor {
 
   public ArrayList<Coordinate> createCoords() {
     ArrayList<Coordinate> out = new ArrayList<Coordinate>();
-    int min = Math.min(xVals.size(), yVals.size());
+    int min = yVals.size();
+    double dub = 0.0;
     for(int i = 0; i< min; i++) {
-      out.add(new Coordinate(xVals.get(i), yVals.get(i)));
+      out.add(new Coordinate(dub, yVals.get(i)));
+      dub += 1.0;
     }
-
     return out;
   }
 
@@ -77,24 +80,17 @@ public class Regressor {
       y_Cept = coords.get(0).getY();
     }
     double slope = y_change/x_Change;
-    double factor1 = .000001;
-    double factor2 = .000001;
     double costSlope = calculateFirstCostSlope(slope, y_Cept, coords);
-    System.out.println("Initial costSlope: " + costSlope);
     double costSlope2 = calculateSecondCostSlope(slope, y_Cept, coords);
-
     int i =0;
-    while((costSlope < .00001) /*|| i< 100000*/) {
-      // System.out.println(costSlope);
-      y_Cept = y_Cept + (.005) * calculateSecondCostSlope(slope, y_Cept, coords);
-      slope = slope + (.00001) * calculateFirstCostSlope(slope, y_Cept, coords);
+    while((costSlope < .00001)) {
+      y_Cept = y_Cept + (.09) * calculateSecondCostSlope(slope, y_Cept, coords);
+      slope = slope + (.009) * calculateFirstCostSlope(slope, y_Cept, coords);
       costSlope = calculateFirstCostSlope(slope, y_Cept, coords);
       costSlope2 = calculateSecondCostSlope(slope, y_Cept, coords);
-      System.out.println("Final: costSlope: " + costSlope);
-      System.out.println("Second: " + costSlope2);
       i++;
     }
-    System.out.println("Slope: " + slope + "y_Cept: " + y_Cept);
+    System.out.println("Slope: " + slope + " y_Cept: " + y_Cept);
     yIntercept = y_Cept;
     return slope;
   }
