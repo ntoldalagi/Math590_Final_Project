@@ -52,8 +52,9 @@ public class Grapher extends Application {
       lineGraph.setCreateSymbols(true);
       lineGraph.getData().addAll(series1, series2);
       Scene scene  = new Scene(lineGraph, 500, 400);
-      System.out.println(getClass().getResource("/chartStyle.css"));
-      scene.getStylesheets().add(getClass().getResource("/chartStyle.css").toExternalForm());
+      if(getClass().getResource("/chartStyle.css") != null) {
+        scene.getStylesheets().add(getClass().getResource("/chartStyle.css").toExternalForm());
+      }
       stage.setScene(scene);
       stage.show();
     }
