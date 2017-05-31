@@ -23,7 +23,7 @@ public class PanelCreator extends JFrame{
     int height = width/16*9;
     setSize(1000,1000);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    JLabel label = new JLabel("Click the button to select data and build line!");
+    JLabel label = new JLabel("Click the button to select a data file of type 'txt' and build a line!");
     label.setHorizontalAlignment(JLabel.CENTER);
     label.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.BLACK));
     JPanel panel = new JPanel(new BorderLayout());
