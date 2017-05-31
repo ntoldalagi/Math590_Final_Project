@@ -13,6 +13,8 @@ import javax.swing.JFileChooser;
 import java.awt.BorderLayout;
 
 public class PanelCreator extends JFrame{
+  JButton button1;
+  JButton button2;
   public static void main(String[] args) {
     PanelCreator p = new PanelCreator("Trend Line Maker");
   }
@@ -28,25 +30,33 @@ public class PanelCreator extends JFrame{
     label.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.BLACK));
     JPanel panel = new JPanel(new BorderLayout());
     panel.setSize(width,height);
-    JButton button = new JButton ("Run Line Maker");
-    button.addActionListener(new PlayButtonListener());
+    button1 = new JButton("Run Line Maker");
+    button2 = new JButton("Graph Cost Over Time");
+    button1.addActionListener(new PlayButtonListener());
+    button2.addActionListener(new CostButtonListener());
     panel.add(label, BorderLayout.NORTH);
-    panel.add(button, BorderLayout.CENTER);
+    panel.add(button1, BorderLayout.CENTER);
+    panel.add(button2, BorderLayout.SOUTH);
     add(panel);
     pack();
     setLocationRelativeTo(null);
     setVisible(true);
   }
 
-  private class PlayButtonListener implements ActionListener {
-    public void actionPerformed(ActionEvent e)
-    {
+  private class CostButtonListener implements ActionListener {
+    public void actionPerformed(ActionEvent e) {
       JButton source = (JButton) e.getSource();
       source.setVisible(false);
+      button1.setVisible(false);
       File f = null;
       String title = "";
       while(true) {
         JFileChooser chooser = new JFileChooser();
+        try {
+          chooser.setCurrentDirectory(new File(PanelCreator.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()));
+        } catch (Throwable a) {
+          System.out.println(a);
+        }
         int choice = chooser.showOpenDialog(null);
         f = chooser.getSelectedFile();
         if(f.getName().indexOf(".txt") == -1) {
@@ -57,7 +67,35 @@ public class PanelCreator extends JFrame{
           break;
         }
       }
-      LineCreator lc = new LineCreator(f, title);
+      LineCreator lc = new LineCreator(f, title, false);
+    }
+  }
+  private class PlayButtonListener implements ActionListener {
+    public void actionPerformed(ActionEvent e)
+    {
+      JButton source = (JButton) e.getSource();
+      source.setVisible(false);
+      button2.setVisible(false);
+      File f = null;
+      String title = "";
+      while(true) {
+        JFileChooser chooser = new JFileChooser();
+        try {
+          chooser.setCurrentDirectory(new File(PanelCreator.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()));
+        } catch (Throwable a) {
+          System.out.println(a);
+        }
+        int choice = chooser.showOpenDialog(null);
+        f = chooser.getSelectedFile();
+        if(f.getName().indexOf(".txt") == -1) {
+          System.out.println("CHOOSE A FILE OF TYPE '.txt'");
+          continue;
+        } else {
+          title = f.getName().substring(0, f.getName().indexOf(".txt"));
+          break;
+        }
+      }
+      LineCreator lc = new LineCreator(f, title, true);
     }
   }
 

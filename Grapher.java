@@ -13,15 +13,17 @@ public class Grapher extends Application {
     private static ArrayList<Coordinate> lineCoords;
     private static ArrayList<Coordinate> scatterCoords;
     private static String xoriginal = null;
+    private static ArrayList<Coordinate> coordslist;
     private String startDate;
     public Grapher() {
     }
 
-    public Grapher(String s, ArrayList<Coordinate> lCoord, ArrayList<Coordinate> sCoord, String start) {
+    public Grapher(String s, ArrayList<Coordinate> lCoord, ArrayList<Coordinate> sCoord, String start, ArrayList<Coordinate> list) {
       scatterCoords = sCoord;
       lineCoords = lCoord;
       xoriginal = start;
       title = s;
+      coordslist = list;
       launch();
     }
 
@@ -36,7 +38,7 @@ public class Grapher extends Application {
       final LineChart<Number, Number> lineGraph = new
           LineChart<Number, Number>(xAxis, yAxis);
       xAxis.setLabel("Time in Days after " + xoriginal) ;
-      yAxis.setLabel("Prices");
+      yAxis.setLabel("Prices ($)");
       lineGraph.setTitle(title);
       XYChart.Series series1 = new XYChart.Series();
       series1.setName(title + " prices");
@@ -56,6 +58,28 @@ public class Grapher extends Application {
         scene.getStylesheets().add(getClass().getResource("/chartStyle.css").toExternalForm());
       }
       stage.setScene(scene);
+
+      // yAxisMax = findMax(coordslist, false);
+      // xAxisMax = findMax(coordslist, true);
+      // yAxisMin = findMin(coordslist, false);
+      // xAxisMin = findMin(coordslist, true);
+      // final NumberAxis xAxis1 = new NumberAxis(xAxisMin -10, xAxisMax + 10, (xAxisMax - xAxisMin)/10);
+      // final NumberAxis yAxis1 = new NumberAxis(yAxisMin -10, yAxisMax + 10, (yAxisMax - yAxisMin)/10);
+      // final ScatterChart<Number, Number> scatterChart = new
+      //   ScatterChart<Number, Number>(xAxis1, yAxis1);
+      // xAxis.setLabel("Iterations");
+      // yAxis.setLabel("Cost");
+      // scatterChart.setTitle("Cost Function");
+      // XYChart.Series series3 = new XYChart.Series();
+      // series1.setName("Cost");
+      // System.out.println("C: " + coordslist);
+      // for(Coordinate c: coordslist) {
+      //   series3.getData().add(new XYChart.Data(c.getX(), c.getY()));
+      // }
+      // scatterChart.setAnimated(false);
+      // scatterChart.getData().addAll(series3);
+      // Scene scene1  = new Scene(scatterChart, 500, 400);
+      // stage.setScene(scene1);
       stage.show();
     }
 

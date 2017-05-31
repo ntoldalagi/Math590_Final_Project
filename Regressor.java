@@ -5,6 +5,7 @@ public class Regressor {
   private ArrayList<Double> yVals;
   private String startDate;
   private ArrayList<Coordinate> coords;
+  private ArrayList<Coordinate> costCoords;
   private double finalSlope;
   private double yIntercept;
 
@@ -12,6 +13,7 @@ public class Regressor {
     startDate = start;
     yVals = y;
     xVals = null;
+    costCoords = new ArrayList<Coordinate>();
     coords = createCoords();
     finalSlope = findMin(coords);
   }
@@ -22,6 +24,10 @@ public class Regressor {
 
   public double getFinalIntercept() {
     return yIntercept;
+  }
+
+  public ArrayList<Coordinate> getCostCoords() {
+    return costCoords;
   }
 
   public ArrayList<Coordinate> createCoords() {
@@ -83,13 +89,19 @@ public class Regressor {
     double costSlope = calculateFirstCostSlope(slope, y_Cept, coords);
     double costSlope2 = calculateSecondCostSlope(slope, y_Cept, coords);
     int i =0;
-    while((costSlope < .00001)) {
-      y_Cept = y_Cept + (.09) * calculateSecondCostSlope(slope, y_Cept, coords);
-      slope = slope + (.009) * calculateFirstCostSlope(slope, y_Cept, coords);
+    System.out.println("COST SLOPE " + costSlope);
+    while((costSlope >= .00001 || costSlope <= -.00001) || (costSlope2 >= .00001|| costSlope2 <= -0.00001)) {
+      y_Cept = y_Cept + (.01) * calculateSecondCostSlope(slope, y_Cept, coords);
+      slope = slope + (.001) * calculateFirstCostSlope(slope, y_Cept, coords);
       costSlope = calculateFirstCostSlope(slope, y_Cept, coords);
       costSlope2 = calculateSecondCostSlope(slope, y_Cept, coords);
+      if(i < 10 || i % 5 == 0) {
+        double cost = calculateCost(slope, y_Cept, coords);
+        costCoords.add(new Coordinate(i+1, cost));
+      }
       i++;
     }
+    // System.out.println(costCoords);
     System.out.println("Slope: " + slope + " y_Cept: " + y_Cept);
     yIntercept = y_Cept;
     return slope;

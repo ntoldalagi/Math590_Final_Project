@@ -15,8 +15,9 @@ public class LineCreator {
   private double yIntercept;
   private ArrayList<Coordinate> lineCoordinates;
   private ArrayList<Coordinate> scatterCoordinates;
+  private ArrayList<Coordinate> costCoords;
 
-  public LineCreator(File f, String title) {
+  public LineCreator(File f, String title, boolean graph) {
 
     inYData = readFile(f);
     Regressor r = new Regressor(startDate, inYData);
@@ -25,7 +26,12 @@ public class LineCreator {
     lineCoordinates = new ArrayList<Coordinate>();
     scatterCoordinates = new ArrayList<Coordinate>();
     makeCoordinates();
-    Grapher g = new Grapher(title, lineCoordinates, scatterCoordinates, startDate);
+    if(graph) {
+      Grapher g = new Grapher(title, lineCoordinates, scatterCoordinates, startDate, r.getCostCoords());
+    } else {
+      ParabolaGrapher g = new ParabolaGrapher(title, lineCoordinates, scatterCoordinates, startDate, r.getCostCoords());
+    }
+    // ParabolaGrapher pg = new ParabolaGrapher(r.getCostCoords());
   }
 
   public ArrayList<Double> readFile(File f) {
@@ -131,7 +137,6 @@ public class LineCreator {
         break;
       }
     }
-    LineCreator lc = new LineCreator(f, title);
+    LineCreator lc = new LineCreator(f, title, true);
   }
-
 }
